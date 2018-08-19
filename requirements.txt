@@ -11,7 +11,6 @@ Pillow==5.2.0
 pipenv==2018.7.1
 psycopg2==2.7.5
 pycrypto==2.6.1
-pygobject==3.26.1
 pytz==2018.5
 pyxdg==0.25
 SecretStorage==2.3.1

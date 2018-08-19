@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main'
 ]
 
 MIDDLEWARE = [
@@ -74,13 +75,21 @@ WSGI_APPLICATION = 'galeria.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+    #'default': {
+    #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #    'NAME': 'galeria',
+    #    'USER': 'mainuser',
+    #    'PASSWORD': '123456',
+    #    'HOST': 'localhost',
+    #    'PORT': '5432'
+    #}
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'galeria',
-        'USER': 'mainuser',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': ''
+        'NAME': 'd51bh6hrvgvnrr',
+        'USER': 'nbapufoyllkavx',
+        'PASSWORD': 'ea24f5a1ef19f913c9380ed60c187083152f1be92aa597b3ed0b25614145ef82',
+        'HOST': 'ec2-50-16-196-138.compute-1.amazonaws.com',
+        'PORT': '5432'
     }
 }
 

@@ -25,7 +25,7 @@ SECRET_KEY = 'c&%8z-j&a+gn-3$ofrp35z1n6kpl#ttla8=)bu9jnq61a^x9d@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','0.0.0.0','galeria3.herokuapp.com']
 
 
 # Application definition

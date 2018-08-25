@@ -5,6 +5,9 @@ from django.db import models
 
 # Create your models here.
 from django.db.models import ForeignKey
+from datetime import datetime
+
+from django.forms import ModelForm, forms
 
 
 class City(models.Model):
@@ -33,8 +36,8 @@ class User(models.Model):
 class File(models.Model):
     author = models.CharField(max_length=50,null=False)
     url = models.CharField(max_length=20,null=False)
-    title = models.CharField(max_length=8,null=False)
-    date = models.ImageField(upload_to='images' ,null=True)
+    title = models.CharField(max_length=20,null=False)
+    date = models.DateField(default=datetime.now, blank=True)
     city = ForeignKey(City)
     country = ForeignKey(Country)
     user = ForeignKey(User)
@@ -47,5 +50,14 @@ class FileClip(models.Model):
     user = ForeignKey(User)
     file = ForeignKey(File)
 
+class RegisterForm(ModelForm):
+    class Meta:
+        model = User
+        fields = "__all__"
 
+    def validateEmail(self):
+        email = self.cleaned_data('email')
+        if User.objects.filter(email=email):
+            raise forms.ValidationError('El correo electronico es unico')
+        return email
 

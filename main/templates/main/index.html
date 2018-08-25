@@ -2,41 +2,234 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Bootstrap <3</a>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Galeria Equipo 3</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+
+
+    </ul>
+      <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+              dsafdasfdsa
+          <li class="nav-item">
+                    <a class="glyphicon glyphicon-user" href="{% url 'main:index' %}">user</a>
+                </li>
+            <li class="nav-item">
+                    <a class="glyphicon glyphicon-log-out" href="{% url 'main:logout' %}">Salir</a>
+                </li>
+          {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link"href="{% url 'main:login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:register' %}">Registro</a>
+                </li>
+            </ul>
   </div>
+</nav>
+
 
   <div class="jumbotron">
     <div class="container">
-      <h1>Bootstrap starter template</h1>
+      <h1>Galeria Multimedia</h1>
+
+        <div class="input-group mb-3">
+          <select class="custom-select" id="inputGroupSelect02">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          <div class="input-group-append">
+            <label class="input-group-text" for="inputGroupSelect02">Tipo medio</label>
+          </div>
+        </div>
+
+
+        <!-- Grid row -->
+<div class="row">
+
+
+    <!-- Grid column -->
+    <div class="col-lg-4 col-md-12 mb-4 ">
+
+                <div class="row">
+                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">Titulo</div>
+                              <div class="col">Titulo</div>
+                            <div class="w-100"></div>
+                            <div class="col">Autor</div>
+                              <div class="col">Autor</div>
+                               <div class="w-100"></div>
+                            <div class="col">Año</div>
+                               <div class="col">Año</div>
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                           Detalles
+                          </button>
+                        <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                        <div class="card card-primary">
+                          <div class="card-body">
+                                  <h5 class="card-title">Clips Recomendados</h5>
+                            <div class="row">
+                            <div class="col-md-8">
+                                <span class="align-middle">Escena A </span>
+                            </div>
+                                <div class="col-md-4 align-right">
+                            <button class='btn btn-lg ' style='background-color:transparent;'>
+                               <i class="fa fa-play-circle"></i>
+                            </button>
+                                </div>
+                            <div class="col-md-8">
+                                <span class="align-middle">Escena B </span>
+                            </div>
+                                <div class="col-md-4 align-right">
+                            <button class='btn btn-lg ' style='background-color:transparent;'>
+                               <i class="fa fa-play-circle"></i>
+                            </button>
+                                </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+     <!-- Grid column -->
+    <div class="col-lg-4 col-md-12 mb-4 ">
+
+                <div class="row">
+                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">Titulo</div>
+                              <div class="col">Titulo</div>
+                            <div class="w-100"></div>
+                            <div class="col">Autor</div>
+                              <div class="col">Autor</div>
+                               <div class="w-100"></div>
+                            <div class="col">Año</div>
+                               <div class="col">Año</div>
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                           Detalles
+                          </button>
+                        <div class="collapse" id="collapseExample2">
+                      <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                      </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+     <!-- Grid column -->
+    <div class="col-lg-4 col-md-12 mb-4 ">
+
+                <div class="row">
+                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">Titulo</div>
+                              <div class="col">Titulo</div>
+                            <div class="w-100"></div>
+                            <div class="col">Autor</div>
+                              <div class="col">Autor</div>
+                               <div class="w-100"></div>
+                            <div class="col">Año</div>
+                               <div class="col">Año</div>
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                           Detalles
+                          </button>
+                        <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                      </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+     <!-- Grid column -->
+    <div class="col-lg-4 col-md-12 mb-4 ">
+
+                <div class="row">
+                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">Titulo</div>
+                              <div class="col">Titulo</div>
+                            <div class="w-100"></div>
+                            <div class="col">Autor</div>
+                              <div class="col">Autor</div>
+                               <div class="w-100"></div>
+                            <div class="col">Año</div>
+                               <div class="col">Año</div>
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                           Detalles
+                          </button>
+                        <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                      </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    </div>
+    <!-- Grid column -->
+
+</div>
+<!-- Grid row -->
       <p class="lead">Bacon ipsum dolor sit amet tenderloin chuck jowl, drumstick pork loin kevin andouille tri-tip. Turkey biltong sirloin, tongue rump pork belly t-bone tail sausage venison corned beef. Jerky pig shoulder beef, tri-tip turducken kevin ribeye prosciutto spare ribs.</p>
       <a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>
     </div>

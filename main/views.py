@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
@@ -10,7 +10,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from main.models import RegisterForm, File, FileClip, User
+from main.models import RegisterForm, File, FileClip, UserGallery, City
 
 
 def index(request):
@@ -27,19 +27,18 @@ def index(request):
 def register(request,value=None):
     title = "Confirmación de creación";
     body = "La cuenta se creo exitosamente";
-    if request.user:
+    if request.user.is_authenticated:
         title = "Confirmación de actualización";
         body = "La cuenta se actualizo exitosamente";
     if '2'==value:
-        us = User.objects.filter(email='apbonillab@gmail.com')
-        form = RegisterForm(instance=User,initial={'name':'adriana'});
-
+        us = UserGallery.objects.filter(user_session=request.user)
         for l in us:
-            context = {'name': l.name, "email": l.email, "category": l.category, "password": l.password, "image": l.image,
+            context = {'user_session':l.user_session,'name': l.name, "email": l.email, "password": l.password, "image": l.image,
                        "city": l.city,"country": l.country,"upd":'true'}
-        form = RegisterForm(instance=User, initial=context);
+        form = RegisterForm(instance=UserGallery, initial=context);
         form.fields['email'].widget.attrs['readonly'] = True;
         form.fields['password'].widget.attrs['readonly'] = True;
+        form.fields['user_session'].widget.attrs['readonly'] = True;
         return render(request, 'main/register.html', {'form': form})
 
     else:
@@ -48,12 +47,19 @@ def register(request,value=None):
             if form.is_valid():
                 form.save();
                 email = EmailMessage(title,body, to=[request.POST.get('email')]);
-                email.send()
-                if request.user:
+                email.send();
+                if request.user.is_authenticated:
+                    user = authenticate(username=request.POST.get('user_session'), password=request.POST.get('password'))
+                    if user is not None:
+                        login(request, user);
                     return HttpResponseRedirect(reverse('main:index'))
                 else:
-                    user_model = User.objects._create_user(request.POST.get("email"),request.POST.get("email"),request.POST.get("password"));
+                    user_model = User.objects.create_user(request.POST.get("user_session"),request.POST.get("email"),request.POST.get("password"));
                     user_model.save();
+                    user = authenticate(username=request.POST.get('user_session'),
+                                        password=request.POST.get('password'))
+                    if user is not None:
+                        login(request, user);
                     return HttpResponseRedirect(reverse('main:index'))
 
             else:
@@ -66,7 +72,7 @@ def preloadUser(request):
     user = User.objects.filter(user=request.POST.get('user'));
     return render(request,'main/index.html', user)
 
-def login(request):
+def loginsession(request):
     mensaje = ''
     if request.user.is_authenticated():
         return redirect(reverse('main:index'))
@@ -76,6 +82,7 @@ def login(request):
             password = request.POST.get('password')
             user = authenticate(username=username,password=password)
             if user is not None:
+                login(request,user);
                 return redirect(reverse('main:index'))
             else:
                 mensaje = 'Datos incorrectos'

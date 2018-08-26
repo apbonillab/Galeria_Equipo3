@@ -5,9 +5,8 @@ from .models import *
 from django.contrib import admin
 
 # Register your models here.
-admin.site.register(User)
+admin.site.register(UserGallery)
 admin.site.register(File)
-admin.site.register(Category)
 admin.site.register(FileClip)
 admin.site.register(Country)
 admin.site.register(City)

@@ -13,25 +13,25 @@ from django.forms import ModelForm, forms
 class City(models.Model):
     name = models.CharField(max_length=50, null=False)
 
+
 class Country(models.Model):
     name = models.CharField(max_length=50, null=False)
+
 
 class TypeMultimedia(models.Model):
      name = models.CharField(max_length=50, null=False)
      description = models.CharField(max_length=500, null=True)
 
-class Category(models.Model):
-    name = models.CharField(max_length=50, null=False)
-    description = models.CharField(max_length=500, null=True)
 
-class User(models.Model):
+class UserGallery(models.Model):
+    user_session = models.CharField(max_length=100,null=False)
     name = models.CharField(max_length=100,null=False)
     email = models.CharField(max_length=150,null=False)
-    password = models.CharField(max_length=8,null=False)
+    password = models.CharField(max_length=15,null=False)
     image = models.ImageField(upload_to='images' ,null=True)
     city = ForeignKey(City)
     country = ForeignKey(Country)
-    category = ForeignKey(Category, null=True)
+
 
 class File(models.Model):
     author = models.CharField(max_length=50,null=False)
@@ -40,24 +40,23 @@ class File(models.Model):
     date = models.DateField(default=datetime.now, blank=True)
     city = ForeignKey(City)
     country = ForeignKey(Country)
-    user = ForeignKey(User)
-    category = ForeignKey(Category)
+    user = ForeignKey(UserGallery)
 
 class FileClip(models.Model):
     name = models.CharField(max_length=50,null=False)
     secondStart = models.CharField(max_length=20,null=False)
     secondEnd = models.CharField(max_length=8,null=False)
-    user = ForeignKey(User)
+    user = ForeignKey(UserGallery)
     file = ForeignKey(File)
 
 class RegisterForm(ModelForm):
     class Meta:
-        model = User
+        model = UserGallery
         fields = "__all__"
 
 def validateEmail(self):
         email = self.cleaned_data('email')
-        if User.objects.filter(email=email):
+        if UserGallery.objects.filter(email=email):
             raise forms.ValidationError('El correo electronico es unico')
         return email
 

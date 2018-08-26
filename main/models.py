@@ -25,8 +25,8 @@ class Category(models.Model):
     description = models.CharField(max_length=500, null=True)
 
 class User(models.Model):
-    name = models.CharField(max_length=50,null=False)
-    email = models.CharField(max_length=20,null=False)
+    name = models.CharField(max_length=100,null=False)
+    email = models.CharField(max_length=150,null=False)
     password = models.CharField(max_length=8,null=False)
     image = models.ImageField(upload_to='images' ,null=True)
     city = ForeignKey(City)
@@ -35,8 +35,8 @@ class User(models.Model):
 
 class File(models.Model):
     author = models.CharField(max_length=50,null=False)
-    url = models.CharField(max_length=20,null=False)
-    title = models.CharField(max_length=20,null=False)
+    url = models.CharField(max_length=300,null=False)
+    title = models.CharField(max_length=100,null=False)
     date = models.DateField(default=datetime.now, blank=True)
     city = ForeignKey(City)
     country = ForeignKey(Country)
@@ -55,7 +55,7 @@ class RegisterForm(ModelForm):
         model = User
         fields = "__all__"
 
-    def validateEmail(self):
+def validateEmail(self):
         email = self.cleaned_data('email')
         if User.objects.filter(email=email):
             raise forms.ValidationError('El correo electronico es unico')

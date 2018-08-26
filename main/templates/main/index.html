@@ -23,20 +23,24 @@
     </ul>
       <ul class="navbar-nav">
           {% if user.is_authenticated %}
-              dsafdasfdsa
-          <li class="nav-item">
-                    <a class="glyphicon glyphicon-user" href="{% url 'main:index' %}">user</a>
+          <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'main:index' %}">{{ user }}</a>
                 </li>
-            <li class="nav-item">
-                    <a class="glyphicon glyphicon-log-out" href="{% url 'main:logout' %}">Salir</a>
+            <li class="nav-item" >
+                    <a class="nav-link"  href="{% url 'main:logout' %}">Salir</a>
+                </li>
+              <li class="nav-item" d>
+                    <a class="nav-link" href="{% url 'main:register_upd' '2' %}">Actualizar</a>
+                </li>
+           {% else %}
+              <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:register' %}" name="registry">Registro</a>
                 </li>
           {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link"href="{% url 'main:login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:register' %}">Registro</a>
-                </li>
+
             </ul>
   </div>
 </nav>
@@ -57,181 +61,59 @@
             <label class="input-group-text" for="inputGroupSelect02">Tipo medio</label>
           </div>
         </div>
-
-
-        <!-- Grid row -->
 <div class="row">
+        {% for video in multimedia %}
+             <div class="col-md-5">
 
-
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-12 mb-4 ">
-
-                <div class="row">
                     <div class="col-md-12 embed-responsive embed-responsive-16by9">
-                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+                         <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
                     </div>
                     <div class="col-md-12">
                         <div class="container">
                           <div class="row">
                             <div class="col">Titulo</div>
-                              <div class="col">Titulo</div>
+                              <div class="col">{{ video.title }}</div>
                             <div class="w-100"></div>
                             <div class="col">Autor</div>
-                              <div class="col">Autor</div>
+                              <div class="col">{{ video.author }}</div>
                                <div class="w-100"></div>
                             <div class="col">Año</div>
-                               <div class="col">Año</div>
+                               <div class="col">{{ video.date }}</div>
 
                           </div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                           <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#{{ video.id }}" aria-expanded="false" aria-controls="{{ video.id }}">
                            Detalles
                           </button>
-                        <div class="collapse" id="collapseExample">
-                      <div class="card card-body">
-                        <div class="card card-primary">
-                          <div class="card-body">
-                                  <h5 class="card-title">Clips Recomendados</h5>
-                            <div class="row">
-                            <div class="col-md-8">
-                                <span class="align-middle">Escena A </span>
-                            </div>
-                                <div class="col-md-4 align-right">
-                            <button class='btn btn-lg ' style='background-color:transparent;'>
-                               <i class="fa fa-play-circle"></i>
-                            </button>
-                                </div>
-                            <div class="col-md-8">
-                                <span class="align-middle">Escena B </span>
-                            </div>
-                                <div class="col-md-4 align-right">
-                            <button class='btn btn-lg ' style='background-color:transparent;'>
-                               <i class="fa fa-play-circle"></i>
-                            </button>
-                                </div>
+
+                                 <div class="collapse" id="{{ video.id }}">
+                                  <div class="card card-body">
+                                    <div class="card card-primary">
+                                      <div class="card-body">
+                                              <h5 class="card-title">Clips Recomendados</h5>
+                                          {% for cl in video.clip %}
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                                <span class="align-middle">{{ cl.name }}</span>
+                                            </div>
+                                            <div class="col-md-4 align-right">
+                                                <button class='btn btn-lg ' style='background-color:transparent;'>
+                                                   <i class="fa fa-play-circle"></i>
+                                                </button>
+                                            </div>
+                                        {% endfor %}
+                                          </div>
                           </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                </div>
-            </div>
-    </div>
-
-     <!-- Grid column -->
-    <div class="col-lg-4 col-md-12 mb-4 ">
-
-                <div class="row">
-                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
-                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col">Titulo</div>
-                              <div class="col">Titulo</div>
-                            <div class="w-100"></div>
-                            <div class="col">Autor</div>
-                              <div class="col">Autor</div>
-                               <div class="w-100"></div>
-                            <div class="col">Año</div>
-                               <div class="col">Año</div>
-
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
-                           Detalles
-                          </button>
-                        <div class="collapse" id="collapseExample2">
-                      <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                      </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-     <!-- Grid column -->
-    <div class="col-lg-4 col-md-12 mb-4 ">
-
-                <div class="row">
-                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
-                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col">Titulo</div>
-                              <div class="col">Titulo</div>
-                            <div class="w-100"></div>
-                            <div class="col">Autor</div>
-                              <div class="col">Autor</div>
-                               <div class="w-100"></div>
-                            <div class="col">Año</div>
-                               <div class="col">Año</div>
-
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                           Detalles
-                          </button>
-                        <div class="collapse" id="collapseExample">
-                      <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                      </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-     <!-- Grid column -->
-    <div class="col-lg-4 col-md-12 mb-4 ">
-
-                <div class="row">
-                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
-                         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col">Titulo</div>
-                              <div class="col">Titulo</div>
-                            <div class="w-100"></div>
-                            <div class="col">Autor</div>
-                              <div class="col">Autor</div>
-                               <div class="w-100"></div>
-                            <div class="col">Año</div>
-                               <div class="col">Año</div>
-
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                           Detalles
-                          </button>
-                        <div class="collapse" id="collapseExample">
-                      <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                      </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-    </div>
-    </div>
-    <!-- Grid column -->
-
+              </div>
+    {% endfor %}
 </div>
-<!-- Grid row -->
-      <p class="lead">Bacon ipsum dolor sit amet tenderloin chuck jowl, drumstick pork loin kevin andouille tri-tip. Turkey biltong sirloin, tongue rump pork belly t-bone tail sausage venison corned beef. Jerky pig shoulder beef, tri-tip turducken kevin ribeye prosciutto spare ribs.</p>
-      <a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>
+
     </div>
   </div>
 </body>

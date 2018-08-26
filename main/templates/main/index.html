@@ -2,12 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-{% for imagen in lista_imagenes %}
-    <img src="{{ imagen.url }}" width="400" height="300">
-    {% endfor %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Galeria Equipo 3</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+
+
+    </ul>
+      <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'main:index' %}">{{ user }}</a>
+                </li>
+            <li class="nav-item" >
+                    <a class="nav-link"  href="{% url 'main:logout' %}">Salir</a>
+                </li>
+              <li class="nav-item" d>
+                    <a class="nav-link" href="{% url 'main:register_upd' '2' %}">Actualizar</a>
+                </li>
+           {% else %}
+              <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:register' %}" name="registry">Registro</a>
+                </li>
+          {% endif %}
+
+            </ul>
+  </div>
+</nav>
+
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Galeria Multimedia</h1>
+
+        <div class="input-group mb-3">
+          <select class="custom-select" id="inputGroupSelect02">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          <div class="input-group-append">
+            <label class="input-group-text" for="inputGroupSelect02">Tipo medio</label>
+          </div>
+        </div>
+<div class="row">
+        {% for video in multimedia %}
+             <div class="col-md-5">
+
+                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+                         <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">Titulo</div>
+                              <div class="col">{{ video.title }}</div>
+                            <div class="w-100"></div>
+                            <div class="col">Autor</div>
+                              <div class="col">{{ video.author }}</div>
+                               <div class="w-100"></div>
+                            <div class="col">Año</div>
+                               <div class="col">{{ video.date }}</div>
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                           <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#{{ video.id }}" aria-expanded="false" aria-controls="{{ video.id }}">
+                           Detalles
+                          </button>
+
+                                 <div class="collapse" id="{{ video.id }}">
+                                  <div class="card card-body">
+                                    <div class="card card-primary">
+                                      <div class="card-body">
+                                              <h5 class="card-title">Clips Recomendados</h5>
+                                          {% for cl in video.clip %}
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                                <span class="align-middle">{{ cl.name }}</span>
+                                            </div>
+                                            <div class="col-md-4 align-right">
+                                                <button class='btn btn-lg ' style='background-color:transparent;'>
+                                                   <i class="fa fa-play-circle"></i>
+                                                </button>
+                                            </div>
+                                        {% endfor %}
+                                          </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+    {% endfor %}
+</div>
+
+    </div>
+  </div>
 </body>
+
 </html>

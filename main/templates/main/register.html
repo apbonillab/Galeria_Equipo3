@@ -1,0 +1,30 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div class="row">
+    <div class="col-md-6 col-sm-offset-3">
+         <form action=" {% url 'main:register' %}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+       {% bootstrap_form form %}
+            {% buttons %}
+         {% if user.is_authenticated %}
+            <input type="submit" value="Actualizar">
+             {% else %}
+                 <input type="submit" value="Registrar usuario">
+                {% endif %}
+        {% endbuttons %}
+        </form>
+
+    </div>
+    </div>
+{% endblock %}
+</body>
+</html>

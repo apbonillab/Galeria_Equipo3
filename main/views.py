@@ -18,7 +18,6 @@ def index(request):
         lista_multimedia = File.objects.all();
         for l in lista_multimedia:
             lista_clips = FileClip.objects.filter(file_id=l.id);
-            print lista_clips.values();
             context = {'clip': lista_clips,"title":l.title,"id":l.id,"author":l.author ,"date":l.date, "url":l.url}
             brands_list.append(context);
         context = {'multimedia' : brands_list}
@@ -32,7 +31,6 @@ def register(request,value=None):
         title = "Confirmación de actualización";
         body = "La cuenta se actualizo exitosamente";
     if '2'==value:
-        print "iguales";
         us = User.objects.filter(email='apbonillab@gmail.com')
         form = RegisterForm(instance=User,initial={'name':'adriana'});
 
@@ -42,12 +40,10 @@ def register(request,value=None):
         form = RegisterForm(instance=User, initial=context);
         form.fields['email'].widget.attrs['readonly'] = True;
         form.fields['password'].widget.attrs['readonly'] = True;
-        print form;
         return render(request, 'main/register.html', {'form': form})
 
     else:
         if request.method == 'POST':
-            print 'hara actualizacion-creacion';
             form = RegisterForm(request.POST,request.FILES)
             if form.is_valid():
                 form.save();
@@ -79,7 +75,6 @@ def login(request):
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = authenticate(username=username,password=password)
-            print (user)
             if user is not None:
                 return redirect(reverse('main:index'))
             else:

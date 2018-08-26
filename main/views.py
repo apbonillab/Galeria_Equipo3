@@ -35,8 +35,8 @@ def register(request,value=None):
         print "iguales";
         us = User.objects.filter(email='apbonillab@gmail.com')
         form = RegisterForm(instance=User,initial={'name':'adriana'});
+
         for l in us:
-            print  l.name;
             context = {'name': l.name, "email": l.email, "category": l.category, "password": l.password, "image": l.image,
                        "city": l.city,"country": l.country,"upd":'true'}
         form = RegisterForm(instance=User, initial=context);

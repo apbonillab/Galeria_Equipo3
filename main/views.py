@@ -91,3 +91,17 @@ def loginsession(request):
 def logoutsession(request):
     logout(request)
     return HttpResponseRedirect(reverse('main:index'))
+def agregar_clip(request):
+    agregar_clip = FileClip()
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        secondStart = request.POST.get('secondStart')
+        secondEnd = request.POST.get('secondEnd')
+        fileId = request.POST.get('fileId')
+        agregar_clip.name = name
+        agregar_clip.secondStart = secondStart
+        agregar_clip.secondEnd =  secondEnd
+        agregar_clip.file = File.objects.get(pk=fileId)
+        agregar_clip.user = UserGallery.objects.get(pk=10)
+        agregar_clip.save()
+        return HttpResponseRedirect(reverse('main:index'))

@@ -4,13 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
 from main.models import RegisterForm, File, FileClip, UserGallery, Category
+
+
+
 
 
 def index(request):
@@ -88,9 +91,12 @@ def loginsession(request):
                 mensaje = 'Datos incorrectos'
     return render(request, 'main/login.html', {'mensaje':mensaje})
 
+
 def logoutsession(request):
     logout(request)
     return HttpResponseRedirect(reverse('main:index'))
+
+
 def agregar_clip(request):
     agregar_clip = FileClip()
     if request.method == 'POST':
@@ -109,8 +115,8 @@ def agregar_clip(request):
 
 def findfilebycategoria(request):
     template_name = 'main/findByCategory.html'
+    print request.GET.get('categoryName')
     if Category.objects.filter(name=request.GET.get('categoryName')).exists():
-        print request.GET.get('categoryName')
         categoria = Category.objects.get(name=request.GET.get('categoryName'))
         proyectos = File.objects.filter(category=categoria.id).values()
         form ={'proyectos': proyectos}

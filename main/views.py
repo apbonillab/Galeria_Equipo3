@@ -116,9 +116,8 @@ def agregar_clip(request):
 def findfilebycategoria(request):
     template_name = 'main/findByCategory.html'
     print request.GET.get('categoryName')
-    if Category.objects.filter(name=request.GET.get('categoryName')).exists():
-        categoria = Category.objects.get(name=request.GET.get('categoryName'))
-        proyectos = File.objects.filter(category=categoria.id).values()
+    if File.objects.filter(id=request.GET.get('categoryName')).exists():
+        proyectos = File.objects.filter(id=request.GET.get('categoryName')).values()
         form ={'proyectos': proyectos}
         return render(request, template_name, form)
     else:

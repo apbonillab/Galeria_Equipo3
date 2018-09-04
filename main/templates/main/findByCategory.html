@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar por Categoria</title>
+</head>
+
+<body>
+
+<form action="." method="get" class="form" role="form">
+    Digite el nombre de la categoría por la cual quiere buscar archivos
+<input type="text" placeholder="Buscar Archivos" name="categoryName" >
+
+<input type="submit" value="Consultar">
+
+            <h3>Resultados</h3>
+
+        <div class="container-fluid bg-4 text-left">
+                <div class="row">
+
+                    {% for result in proyectos %}
+
+                <div class="col-sm-4">
+                  <div class="thumbnail">
+
+                    <div class="form-group">
+                        <p>Autor : {{result.author}} </p>
+                    </div>
+
+                    <div class="form-group">
+                        <p>URL : {{result.url}} </p>
+
+                    </div>
+
+                    <div class="form-group">
+                        <p>Titulo : {{result.title}} </p>
+                    </div>
+                    <div class="form-group">
+                        <p>Fecha : {{result.date}} </p>
+                    </div>
+                      <br>
+                      <br>
+
+                  </div>
+                </div>
+                {% empty %}
+
+                   <p style="text-center">No results found.</p>
+                    {% endfor%}
+                </div>
+        </div>
+
+</form>
+
+</body>
+</html>

@@ -10,7 +10,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from main.models import RegisterForm, File, FileClip, UserGallery, City
+from main.models import RegisterForm, File, FileClip, UserGallery, Category
 
 
 def index(request):
@@ -105,3 +105,28 @@ def agregar_clip(request):
         agregar_clip.user = UserGallery.objects.get(pk=10)
         agregar_clip.save()
         return HttpResponseRedirect(reverse('main:index'))
+
+
+def findfilebycategoria(request):
+    template_name = 'main/findByCategory.html'
+    if Category.objects.filter(name=request.GET.get('categoryName')).exists():
+        print request.GET.get('categoryName')
+        categoria = Category.objects.get(name=request.GET.get('categoryName'))
+        proyectos = File.objects.filter(category=categoria.id).values()
+        form ={'proyectos': proyectos}
+        return render(request, template_name, form)
+    else:
+        print 'no entró'
+        return render(request, template_name)
+
+
+def findfilebytypemultimedia(request):
+    template_name = 'main/findByType.html'
+    if Category.objects.filter(name=request.GET.get('typeName')).exists():
+        categoria = Category.objects.get(name=request.GET.get('typeName'))
+        proyectos = File.objects.filter(type=categoria.id).values()
+        form = {'proyectos': proyectos}
+        return render(request, template_name, form)
+    else:
+        print 'no entró'
+        return render(request, template_name)

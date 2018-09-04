@@ -111,7 +111,7 @@ $(document).on("click", ".open-AddDialog", function () {
                     </div>
 
                     <div class="form-group">
-                        <p>URL : {{result.url}} </p>
+                        <iframe class="embed-responsive-item" src="{{ result.url }}?start={{ cl.secondStart }};end={{ cl.secondEnd }}" allowfullscreen></iframe>
 
                     </div>
 

@@ -46,7 +46,8 @@ class File(models.Model):
     city = ForeignKey(City)
     country = ForeignKey(Country)
     user = ForeignKey(UserGallery)
-    category = ForeignKey(Category)  # type: Category
+    category = ForeignKey(Category)
+    typemultimedia = ForeignKey(TypeMultimedia)
 
 
 class FileClip(models.Model):

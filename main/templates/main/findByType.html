@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <title>Buscar por Categoria</title>
+    <title>Buscar por Tipo de Multimedia</title>
 </head>
 <style>
     fieldset
@@ -92,7 +92,13 @@ $(document).on("click", ".open-AddDialog", function () {
 
 <form action="." method="get" class="form" role="form">
     Digite el nombre del tipo de multimedia por el cual quiere buscar archivos
-<input type="text" placeholder="Buscar Archivos" name="typeName" >
+<div>
+<select class="custom-select" id="inputGroupSelect02" name="typeName">
+                <option selected>...</option>
+                <option value="1">Video</option>
+                <option value="2">Audio</option>
+            </select>
+</div>
 
 <input type="submit" value="Consultar">
 

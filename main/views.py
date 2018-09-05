@@ -4,13 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from main.models import RegisterForm, File, FileClip, UserGallery, City
+from main.models import RegisterForm, File, FileClip, UserGallery, Category
+
+
+
 
 
 def index(request):
@@ -88,9 +91,12 @@ def loginsession(request):
                 mensaje = 'Datos incorrectos'
     return render(request, 'main/login.html', {'mensaje':mensaje})
 
+
 def logoutsession(request):
     logout(request)
     return HttpResponseRedirect(reverse('main:index'))
+
+
 def agregar_clip(request):
     agregar_clip = FileClip()
     if request.method == 'POST':
@@ -105,3 +111,23 @@ def agregar_clip(request):
         agregar_clip.user = UserGallery.objects.get(pk=10)
         agregar_clip.save()
         return HttpResponseRedirect(reverse('main:index'))
+
+
+def findfilebycategoria(request):
+    template_name = 'main/findByCategory.html'
+    if File.objects.filter(category_id=request.GET.get('categoryName')).exists():
+        proyectos = File.objects.filter(category_id=request.GET.get('categoryName')).values()
+        form ={'proyectos': proyectos}
+        return render(request, template_name, form)
+    else:
+        return render(request, template_name)
+
+
+def findfilebytypemultimedia(request):
+    template_name = 'main/findByType.html'
+    if File.objects.filter(category_id=request.GET.get('typeName')).exists():
+        proyectos = File.objects.filter(category_id=request.GET.get('typeName')).values()
+        form = {'proyectos': proyectos}
+        return render(request, template_name, form)
+    else:
+        return render(request, template_name)

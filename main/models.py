@@ -17,6 +17,9 @@ class City(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=50, null=False)
 
+class Category(models.Model):
+    name = models.CharField(max_length=50, null=False)
+    description = models.CharField(max_length=500, null=True)
 
 class TypeMultimedia(models.Model):
      name = models.CharField(max_length=50, null=False)
@@ -41,6 +44,8 @@ class File(models.Model):
     city = ForeignKey(City)
     country = ForeignKey(Country)
     user = ForeignKey(UserGallery)
+    type = ForeignKey(TypeMultimedia)
+    category = ForeignKey(Category)
 
 class FileClip(models.Model):
     name = models.CharField(max_length=50,null=False)

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+from rest_framework.views import APIView
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -11,7 +13,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from main.models import RegisterForm, File, FileClip, UserGallery, Category
-
+from main.serializers import FileSerializer
 
 def index(request):
     brands_list = [];
@@ -142,3 +144,13 @@ def findfilebytypemultimedia(request):
         return render(request, template_name, form)
     else:
         return render(request, template_name)
+
+
+class FileAPI(APIView):
+    serializer=FileSerializer
+
+    def get(self,request,format=None):
+        lista=File.objects.all()
+        response=self.serializer(lista,many=True)
+
+        return HttpResponse(json.dumps(response.data),content_type='application/json')

@@ -76,25 +76,43 @@ $(document).on("click", ".open-AddDialog", function () {
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:register' %}" name="registry">Registro</a>
                 </li>
+                <li class="nav-item" d>
+                    <a class="nav-link" href="{% url 'main:buscar_archivo_por_categoria' %}">Buscar Archivo por Categoria</a>
+                </li>
+              <li class="nav-item" d>
+                    <a class="nav-link" href="{% url 'main:buscar_archivo_por_tipo_multimedia' %}">Buscar Archivo por Tipo Multimedia</a>
+                </li>
             {% endif %}
 
         </ul>
     </div>
 </nav>
 
-
+<form action="#" method="get" class="form" role="form">
 <div class="jumbotron">
     <div class="container">
         <h1>Galeria Multimedia</h1>
-
+        <h2>Buscar por Categoría</h2>
         <div class="input-group mb-3">
-            <select class="custom-select" id="inputGroupSelect02">
+            <select class="custom-select" id="inputGroupSelect02" name="categoryName">
                 <option selected>...</option>
-                <option value="1">Video</option>
-                <option value="2">Audio</option>
+                <option value="1">Educativo</option>
+                <option value="2">Documentales</option>
             </select>
             <div class="input-group-append">
-                <label class="input-group-text" for="inputGroupSelect02">Tipo medio</label>
+                <input type="submit"  name="btnfindByType" id="btnfindByType" value="Consultar"> </div>
+            </div>
+        </div>
+        <div class="container">
+        <h2>Buscar por Tipo de Multimedia</h2>
+        <div class="input-group mb-3">
+            <select class="custom-select" id="inputGroupSelect02" name="typeName">
+                <option selected>...</option>
+                <option value="Video">Video</option>
+                <option value="Audio">Audio</option>
+            </select>
+            <div class="input-group-append">
+                <input type="submit"  name="btnfindByType" id="btnfindByType" value="Consultar2"> </div>
             </div>
         </div>
         <div class="row">
@@ -202,6 +220,7 @@ $(document).on("click", ".open-AddDialog", function () {
         </div>
     </div>
 </div>
+</form>
 </body>
 
 </html>

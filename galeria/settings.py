@@ -76,21 +76,14 @@ WSGI_APPLICATION = 'galeria.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #    'NAME': 'galeria',
-    #    'USER': 'mainuser',
-    #    'PASSWORD': '123456',
-    #    'HOST': 'localhost',
-    #    'PORT': '5432'
-    #}
+
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dd62qh158toeg5',
-        'USER': 'vnalogocjeqfma',
-        'PASSWORD': '9e674c333dd41974de6f40ad67034af46840807000d07ab7e82449fe69c93501',
-        'HOST': 'ec2-54-221-210-97.compute-1.amazonaws.com',
-        'PORT': '5432'
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'dd62qh158toeg5',
+       'USER': 'vnalogocjeqfma',
+       'PASSWORD': '9e674c333dd41974de6f40ad67034af46840807000d07ab7e82449fe69c93501',
+       'HOST': 'ec2-54-221-210-97.compute-1.amazonaws.com',
+       'PORT': '5432'
     }
 }
 
@@ -142,3 +135,18 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'agilidadeq3@gmail.com'
 EMAIL_HOST_PASSWORD = 'agil123456'
 EMAIL_PORT = 587
+DEBUG = True
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        #'URL': 'http://127.0.0.1:9200',                 # Assuming you created a core named 'tester' as described in installing search engines.
+        'URL': 'http://127.0.0.1:9200',
+        'INDEX_NAME': 'haystack',
+        # ...or for multicore...
+        # 'URL': 'http://127.0.0.1:8983/solr/mysite',
+    },
+}
+
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

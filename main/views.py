@@ -4,37 +4,47 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from main.models import RegisterForm, File, FileClip, UserGallery, City
+from main.models import RegisterForm, File, FileClip, UserGallery, Category
 
 
 def index(request):
-        brands_list = [];
-        lista_multimedia = File.objects.all();
+    brands_list = [];
+    if request.GET.get('btnfindByType') == "Consultar":
+        lista_multimedia = File.objects.filter(category_id = request.GET.get('categoryName'));
         for l in lista_multimedia:
             lista_clips = FileClip.objects.filter(file_id=l.id);
-            context = {'clip': lista_clips,"title":l.title,"id":l.id,"author":l.author ,"date":l.date, "url":l.url}
+            context = {'clip': lista_clips, "title": l.title, "id": l.id, "author": l.author, "date": l.date,
+                       "url": l.url}
             brands_list.append(context);
-        context = {'multimedia' : brands_list}
-        return render(request,'main/index.html', context)
+    else:
+        lista_multimedia = File.objects.filter(typemultimedia__name= request.GET.get('typeName'));
+        for l in lista_multimedia:
+            lista_clips = FileClip.objects.filter(file_id=l.id);
+            context = {'clip': lista_clips, "title": l.title, "id": l.id, "author": l.author, "date": l.date,
+                       "url": l.url}
+            brands_list.append(context);
+    context = {'multimedia': brands_list}
+    return render(request, 'main/index.html', context)
 
 
-def register(request,value=None):
+def register(request, value=None):
     title = "Confirmación de creación";
     body = "La cuenta se creo exitosamente";
     if request.user.is_authenticated:
         title = "Confirmación de actualización";
         body = "La cuenta se actualizo exitosamente";
-    if '2'==value:
+    if '2' == value:
         us = UserGallery.objects.filter(user_session=request.user)
         for l in us:
-            context = {'user_session':l.user_session,'name': l.name, "email": l.email, "password": l.password, "image": l.image,
-                       "city": l.city,"country": l.country,"upd":'true'}
+            context = {'user_session': l.user_session, 'name': l.name, "email": l.email, "password": l.password,
+                       "image": l.image,
+                       "city": l.city, "country": l.country, "upd": 'true'}
         form = RegisterForm(instance=UserGallery, initial=context);
         form.fields['email'].widget.attrs['readonly'] = True;
         form.fields['password'].widget.attrs['readonly'] = True;
@@ -43,18 +53,20 @@ def register(request,value=None):
 
     else:
         if request.method == 'POST':
-            form = RegisterForm(request.POST,request.FILES)
+            form = RegisterForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save();
-                email = EmailMessage(title,body, to=[request.POST.get('email')]);
+                email = EmailMessage(title, body, to=[request.POST.get('email')]);
                 email.send();
                 if request.user.is_authenticated:
-                    user = authenticate(username=request.POST.get('user_session'), password=request.POST.get('password'))
+                    user = authenticate(username=request.POST.get('user_session'),
+                                        password=request.POST.get('password'))
                     if user is not None:
                         login(request, user);
                     return HttpResponseRedirect(reverse('main:index'))
                 else:
-                    user_model = User.objects.create_user(request.POST.get("user_session"),request.POST.get("email"),request.POST.get("password"));
+                    user_model = User.objects.create_user(request.POST.get("user_session"), request.POST.get("email"),
+                                                          request.POST.get("password"));
                     user_model.save();
                     user = authenticate(username=request.POST.get('user_session'),
                                         password=request.POST.get('password'))
@@ -66,11 +78,13 @@ def register(request,value=None):
                 return render(request, 'main/register.html', {'form': form})
         else:
             form = RegisterForm()
-            return render(request, 'main/register.html', {'form':form})
+            return render(request, 'main/register.html', {'form': form})
+
 
 def preloadUser(request):
     user = User.objects.filter(user=request.POST.get('user'));
-    return render(request,'main/index.html', user)
+    return render(request, 'main/index.html', user)
+
 
 def loginsession(request):
     mensaje = ''
@@ -80,17 +94,20 @@ def loginsession(request):
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
-            user = authenticate(username=username,password=password)
+            user = authenticate(username=username, password=password)
             if user is not None:
-                login(request,user);
+                login(request, user);
                 return redirect(reverse('main:index'))
             else:
                 mensaje = 'Datos incorrectos'
-    return render(request, 'main/login.html', {'mensaje':mensaje})
+    return render(request, 'main/login.html', {'mensaje': mensaje})
+
 
 def logoutsession(request):
     logout(request)
     return HttpResponseRedirect(reverse('main:index'))
+
+
 def agregar_clip(request):
     agregar_clip = FileClip()
     if request.method == 'POST':
@@ -100,8 +117,28 @@ def agregar_clip(request):
         fileId = request.POST.get('fileId')
         agregar_clip.name = name
         agregar_clip.secondStart = secondStart
-        agregar_clip.secondEnd =  secondEnd
+        agregar_clip.secondEnd = secondEnd
         agregar_clip.file = File.objects.get(pk=fileId)
         agregar_clip.user = UserGallery.objects.get(pk=10)
         agregar_clip.save()
         return HttpResponseRedirect(reverse('main:index'))
+
+
+def findfilebycategoria(request):
+    template_name = 'main/findByCategory.html'
+    if File.objects.filter(category_id=request.GET.get('categoryName')).exists():
+        proyectos = File.objects.filter(category_id=request.GET.get('categoryName')).values()
+        form = {'proyectos': proyectos}
+        return render(request, template_name, form)
+    else:
+        return render(request, template_name)
+
+
+def findfilebytypemultimedia(request):
+    template_name = 'main/findByType.html'
+    if File.objects.filter(category_id=request.GET.get('typeName')).exists():
+        proyectos = File.objects.filter(category_id=request.GET.get('typeName')).values()
+        form = {'proyectos': proyectos}
+        return render(request, template_name, form)
+    else:
+        return render(request, template_name)

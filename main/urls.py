@@ -13,5 +13,6 @@ urlpatterns=[
     url(r'^findbycategory/$', views.findfilebycategoria, name='buscar_archivo_por_categoria'),
     url(r'^findbytype/$', views.findfilebytypemultimedia, name='buscar_archivo_por_tipo_multimedia'),
     url(r'^api/$', FileAPI.as_view(), name='api'),
+    url(r'^ingreso/$', views.ingreso, name='ingreso')
 
 ]

@@ -15,13 +15,13 @@
         function send() {
             $.ajax({
                 method:"POST",
-                url:"http://127.0.0.1:8000/main/login/",
+                url:"https://galeria3.herokuapp.com/main/login/",
                 data:JSON.stringify({username:$('#username').val(),password:$('#password').val()}),
                 contentType:"application/json;charset=utf-8",
                 success: function (data) {
                     console.log('data'+data);
                     if(data.mensaje =='ok')
-                        window.location="http://127.0.0.1:8000/main"
+                        window.location="https://galeria3.herokuapp.com/main"
                     else
                         $('#mensaje').text(data.mensaje);
                         $('.msg').show()
@@ -74,7 +74,7 @@
             <input id="username" name="username" type="text" placeholder="Usuario" class="form-control input-md" required=""><br>
             <input id="password" name="password" type="text" placeholder="Clave" class="form-control input-md" required=""><br>
             <button type="submit" class="btn btn-primary" >Login</button>
-            <a href="http://127.0.0.1:8000/main" class="btn btn-primary">Cancelar</a>
+            <a href="https://galeria3.herokuapp.com/main" class="btn btn-primary">Cancelar</a>
         </form>
     </div>
 

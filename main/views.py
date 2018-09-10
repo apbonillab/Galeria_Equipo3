@@ -1,34 +1,31 @@
 # -*- coding: utf-8 -*-
+import self
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django.core.serializers import serialize
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import serializers
 
 from main.models import RegisterForm, File, FileClip, UserGallery, Category
 
 
+
 def index(request):
+    print('main')
     brands_list = [];
-    if request.GET.get('btnfindByType') == "Consultar":
-        lista_multimedia = File.objects.filter(category_id = request.GET.get('categoryName'));
-        for l in lista_multimedia:
-            lista_clips = FileClip.objects.filter(file_id=l.id);
-            context = {'clip': lista_clips, "title": l.title, "id": l.id, "author": l.author, "date": l.date,
-                       "url": l.url}
-            brands_list.append(context);
-    else:
-        lista_multimedia = File.objects.filter(typemultimedia__name= request.GET.get('typeName'));
-        for l in lista_multimedia:
-            lista_clips = FileClip.objects.filter(file_id=l.id);
-            context = {'clip': lista_clips, "title": l.title, "id": l.id, "author": l.author, "date": l.date,
-                       "url": l.url}
-            brands_list.append(context);
+    lista_multimedia = File.objects.all();
+    for l in lista_multimedia:
+        lista_clips = FileClip.objects.filter(file_id=l.id);
+        context = {'clip': lista_clips, "title": l.title, "id": l.id, "author": l.author, "date": l.date, "url": l.url}
+        brands_list.append(context);
     context = {'multimedia': brands_list}
     return render(request, 'main/index.html', context)
 
@@ -124,21 +121,28 @@ def agregar_clip(request):
         return HttpResponseRedirect(reverse('main:index'))
 
 
+@csrf_exempt
 def findfilebycategoria(request):
     template_name = 'main/findByCategory.html'
     if File.objects.filter(category_id=request.GET.get('categoryName')).exists():
-        proyectos = File.objects.filter(category_id=request.GET.get('categoryName')).values()
-        form = {'proyectos': proyectos}
-        return render(request, template_name, form)
+        lista_multimedia = File.objects.filter(category_id=request.GET.get('categoryName'));
+        context = {'multimedia': lista_multimedia}
+        return HttpResponse(serialize('json', lista_multimedia))
     else:
         return render(request, template_name)
 
 
 def findfilebytypemultimedia(request):
     template_name = 'main/findByType.html'
-    if File.objects.filter(category_id=request.GET.get('typeName')).exists():
-        proyectos = File.objects.filter(category_id=request.GET.get('typeName')).values()
-        form = {'proyectos': proyectos}
-        return render(request, template_name, form)
+    brands_list = [];
+    if File.objects.filter(typemultimedia__name=request.GET.get('typeName')).exists():
+        lista_multimedia = File.objects.filter(typemultimedia__name=request.GET.get('typeName'));
+        for l in lista_multimedia:
+            lista_clips = FileClip.objects.filter(file_id=l.id);
+            context = {'clip': lista_clips, "title": l.title, "id": l.id, "author": l.author, "date": l.date,
+                       "url": l.url}
+            brands_list.append(context);
+        context = {'multimedia': brands_list}
+        return render(request, 'main/findByType.html', context)
     else:
         return render(request, template_name)

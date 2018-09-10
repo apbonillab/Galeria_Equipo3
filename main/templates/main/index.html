@@ -88,33 +88,14 @@ $(document).on("click", ".open-AddDialog", function () {
     </div>
 </nav>
 
-<form action="#" method="get" class="form" role="form">
+
 <div class="jumbotron">
     <div class="container">
         <h1>Galeria Multimedia</h1>
-        <h2>Buscar por Categoría</h2>
-        <div class="input-group mb-3">
-            <select class="custom-select" id="inputGroupSelect02" name="categoryName">
-                <option selected>...</option>
-                <option value="1">Educativo</option>
-                <option value="2">Documentales</option>
-            </select>
-            <div class="input-group-append">
-                <input type="submit"  name="btnfindByType" id="btnfindByType" value="Consultar"> </div>
-            </div>
+
+
         </div>
-        <div class="container">
-        <h2>Buscar por Tipo de Multimedia</h2>
-        <div class="input-group mb-3">
-            <select class="custom-select" id="inputGroupSelect02" name="typeName">
-                <option selected>...</option>
-                <option value="Video">Video</option>
-                <option value="Audio">Audio</option>
-            </select>
-            <div class="input-group-append">
-                <input type="submit"  name="btnfindByType" id="btnfindByType" value="Consultar2"> </div>
-            </div>
-        </div>
+
         <div class="row">
             {% for video in multimedia %}
                 <div class="col-md-5" style="margin-top: 25px">
@@ -138,7 +119,8 @@ $(document).on("click", ".open-AddDialog", function () {
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#{{ video.id }}" aria-expanded="false" aria-controls="{{ video.id }}">
+                        <button class="btn btn-info btn-block" type="button" data-toggle="collapse"
+                                data-target="#{{ video.id }}" aria-expanded="false" aria-controls="{{ video.id }}">
                             Detalles
                         </button>
                         <div class="collapse" id="{{ video.id }}">
@@ -211,7 +193,7 @@ $(document).on("click", ".open-AddDialog", function () {
                     <div class="form-group">
                         {% buttons %}
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary" name="guardar_clip">Guardar</button>
                         {% endbuttons %}
                     </div>
                 </form>
@@ -220,7 +202,6 @@ $(document).on("click", ".open-AddDialog", function () {
         </div>
     </div>
 </div>
-</form>
 </body>
 
 </html>

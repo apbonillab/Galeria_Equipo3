@@ -95,9 +95,8 @@ $(document).on("click", ".open-AddDialog", function () {
 <div>
 <select class="custom-select" id="inputGroupSelect02" name="categoryName">
                 <option selected>...</option>
-                <option value="1">Rock</option>
-                <option value="2">Salsa</option>
-                <option value="3">Pop</option>
+                <option value="1">Educativo</option>
+                <option value="2">Documentales</option>
             </select>
 </div>
 
@@ -107,41 +106,34 @@ $(document).on("click", ".open-AddDialog", function () {
 
             <h3>Resultados</h3>
 
-        <div class="container-fluid bg-4 text-left">
-                <div class="row">
+        <div class="row">
+            {% for video in multimedia %}
+                <div class="col-md-5" style="margin-top: 25px">
 
-                    {% for result in proyectos %}
-
-                <div class="col-sm-4">
-                  <div class="thumbnail">
-
-                    <div class="form-group">
-                        <p>Autor : {{result.author}} </p>
+                    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
                     </div>
+                    <div class="col-md-12">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">Titulo</div>
+                                <div class="col">{{ video.title }}</div>
+                                <div class="w-100"></div>
+                                <div class="col">Autor</div>
+                                <div class="col">{{ video.author }}</div>
+                                <div class="w-100"></div>
+                                <div class="col">Año</div>
+                                <div class="col">{{ video.date }}</div>
 
-                    <div class="form-group">
-                        <iframe class="embed-responsive-item" src="{{ result.url }}?start={{ cl.secondStart }};end={{ cl.secondEnd }}" allowfullscreen></iframe>
-
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <p>Titulo : {{result.title}} </p>
-                    </div>
-                    <div class="form-group">
-                        <p>Fecha : {{result.date}} </p>
-                    </div>
-                      <br>
-                      <br>
-
-                  </div>
                 </div>
-                {% empty %}
-
-                   <p style="text-center">No results found.</p>
-                    {% endfor%}
-                </div>
+            {% endfor %}
         </div>
 
+    </div>
+</div>
 </form>
 
 </body>

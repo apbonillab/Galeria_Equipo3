@@ -35,3 +35,4 @@ virtualenv-clone==0.3.0
 Werkzeug==0.14.1
 WTForms==1.0.5
 haystack
+djangorestframework==3.8.2

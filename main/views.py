@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
+import json
+
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
 from main.models import RegisterForm, File, FileClip, UserGallery, Category
-
+from main.serializers import FileSerializer
 
 def index(request):
     brands_list = [];
@@ -85,23 +89,27 @@ def preloadUser(request):
     user = User.objects.filter(user=request.POST.get('user'));
     return render(request, 'main/index.html', user)
 
-
+@csrf_exempt
 def loginsession(request):
-    mensaje = ''
-    if request.user.is_authenticated():
-        return redirect(reverse('main:index'))
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+    if request.method == 'POST':
+            jsondata = json.loads(request.body)
+            username = jsondata['username']
+            password = jsondata['password']
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user);
-                return redirect(reverse('main:index'))
+                mensaje='ok'
             else:
                 mensaje = 'Datos incorrectos'
-    return render(request, 'main/login.html', {'mensaje': mensaje})
+    return JsonResponse({'mensaje': mensaje})
 
+@csrf_exempt
+def isAuthenticated(request):
+    if request.user.is_authenticated():
+        mensaje='ok'
+    else:
+        mensaje='fail'
+    return JsonResponse({'mensaje':mensaje})
 
 def logoutsession(request):
     logout(request)
@@ -142,3 +150,17 @@ def findfilebytypemultimedia(request):
         return render(request, template_name, form)
     else:
         return render(request, template_name)
+
+
+class FileAPI(APIView):
+    serializer=FileSerializer
+
+    def get(self,request,format=None):
+        lista=File.objects.all()
+        response=self.serializer(lista,many=True)
+
+        return HttpResponse(json.dumps(response.data),content_type='application/json')
+@csrf_exempt
+def ingreso(request):
+    print ('b')
+    return render(request,'main/login.html')

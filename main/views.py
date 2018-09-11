@@ -2,6 +2,9 @@
 import json
 
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
@@ -128,13 +131,16 @@ def agregar_clip(request):
         return HttpResponseRedirect(reverse('main:index'))
 
 
-@csrf_exempt
-def findfilebycategoria(request):
-    template_name = 'main/findByCategory.html'
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def findbycategoria(request):
+    template_name = 'main/findbycategory.html'
     if File.objects.filter(category_id=request.GET.get('categoryName')).exists():
         lista_multimedia = File.objects.filter(category_id=request.GET.get('categoryName'));
         context = {'multimedia': lista_multimedia}
-        return HttpResponse(serialize('json', lista_multimedia))
+        data = {'lista_multimedia': lista_multimedia}
+        return Response(data, template_name='main/findbycategory.html')
+        #return JsonResponse({'lista_multimedia': serialize('json', lista_multimedia)}, template_name='main/findbycategory.html')
     else:
         return render(request, template_name)
 

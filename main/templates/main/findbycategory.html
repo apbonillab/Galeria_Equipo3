@@ -79,7 +79,7 @@ $(document).on("click", ".open-AddDialog", function () {
                     <a class="nav-link" href="{% url 'main:register' %}" name="registry">Registro</a>
                 </li>
                 <li class="nav-item" d>
-                    <a class="nav-link" href="{% url 'main:buscar_archivo_por_categoria' %}">Buscar Archivo por Categoria</a>
+                    <a class="nav-link" href="{% url 'main:findbycategory' %}">Buscar Archivo por Categoria</a>
                 </li>
               <li class="nav-item" d>
                     <a class="nav-link" href="{% url 'main:buscar_archivo_por_tipo_multimedia' %}">Buscar Archivo por Tipo Multimedia</a>
@@ -89,7 +89,6 @@ $(document).on("click", ".open-AddDialog", function () {
         </ul>
     </div>
 </nav>
-
 <form action="." method="get" class="form" role="form">
     Seleccione el nombre de la categoría por la cual quiere buscar archivos
 <div>
@@ -107,7 +106,7 @@ $(document).on("click", ".open-AddDialog", function () {
             <h3>Resultados</h3>
 
         <div class="row">
-            {% for video in multimedia %}
+            {% for video in lista_multimedia %}
                 <div class="col-md-5" style="margin-top: 25px">
 
                     <div class="col-md-12 embed-responsive embed-responsive-16by9">

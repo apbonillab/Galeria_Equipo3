@@ -85,6 +85,15 @@ DATABASES = {
        'HOST': 'ec2-54-221-210-97.compute-1.amazonaws.com',
        'PORT': '5432'
     }
+
+    #'default': {
+    #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #   'NAME': 'galeria',
+    #   'USER': 'mainuser',
+    #   'PASSWORD': 'pwd',
+    #   'HOST': 'localhost',
+    #   'PORT': '5433'
+    #}
 }
 
 
@@ -141,7 +150,7 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         #'URL': 'http://127.0.0.1:9200',                 # Assuming you created a core named 'tester' as described in installing search engines.
-        'URL': 'http://127.0.0.1:9200',
+        'URL': 'django.db.backends.postgresql_psycopg2:9200',
         'INDEX_NAME': 'haystack',
         # ...or for multicore...
         # 'URL': 'http://127.0.0.1:8983/solr/mysite',
